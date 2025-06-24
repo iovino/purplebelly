@@ -1,0 +1,10 @@
+# IDE and editor folders
+.fleet
+.idea
+.vscode
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+/.tmp
