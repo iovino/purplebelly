@@ -1,4 +1,0 @@
-replicas: 2
-image:
-  repository: nginx
-  tag: alpine

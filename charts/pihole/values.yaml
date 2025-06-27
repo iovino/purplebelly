@@ -1,0 +1,17 @@
+replicaCount: 1
+
+image:
+  repository: pihole/pihole
+  tag: 2024.05.0
+  pullPolicy: IfNotPresent
+
+serviceWeb:
+  type: ClusterIP
+  port: 80
+
+serviceDns:
+  type: ClusterIP
+  port: 53
+
+adminPassword: "changeme123"
+timezone: "America/New_York"

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pihole-dns
+spec:
+  type: {{ .Values.serviceDns.type }}
+  selector:
+    app: pihole
+  ports:
+    - port: {{ .Values.serviceDns.port }}
+      targetPort: 53
+      protocol: UDP
+      name: dns-udp
+    - port: {{ .Values.serviceDns.port }}
+      targetPort: 53
+      protocol: TCP
+      name: dns-tcp
