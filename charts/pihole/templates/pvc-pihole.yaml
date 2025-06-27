@@ -4,6 +4,7 @@ metadata:
   name: pihole-config-pvc
   namespace: pihole
 spec:
+  storageClassName: local-path
   accessModes:
     - ReadWriteOnce
   resources:

@@ -22,15 +22,23 @@ spec:
             runAsUser: 0
             runAsGroup: 0
           ports:
+            - containerPort: 53
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 53
+              name: dns-udp
+              protocol: UDP
             - containerPort: 80
               name: web
-            - containerPort: 53
-              name: dns
           env:
             - name: TZ
               value: {{ .Values.timezone | quote }}
             - name: WEBPASSWORD
               value: {{ .Values.adminPassword | quote }}
+            - name: DNS1
+              value: "127.0.0.1#5335"
+            - name: DNS2
+              value: "127.0.0.1#5335"
           volumeMounts:
             - name: pihole-config
               mountPath: /etc/pihole
@@ -44,6 +52,9 @@ spec:
               mountPath: /run
         - name: unbound
           image: mvance/unbound:latest
+          volumeMounts:
+            - mountPath: /etc/unbound
+              name: unbound-config
           ports:
             - containerPort: 5335
               name: unbound
