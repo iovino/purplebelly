@@ -13,14 +13,14 @@ spec:
         app: pihole
     spec:
       securityContext:
-        fsGroup: 999
+        fsGroup: 0
       containers:
         - name: pihole
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
-            runAsUser: 999
-            runAsGroup: 999
+            runAsUser: 0
+            runAsGroup: 0
           ports:
             - containerPort: 80
               name: web
