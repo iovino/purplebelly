@@ -26,12 +26,21 @@ spec:
               value: {{ .Values.timezone | quote }}
             - name: WEBPASSWORD
               value: {{ .Values.adminPassword | quote }}
+          volumeMounts:
+            - name: pihole-config
+              mountPath: /etc/pihole
+            - name: dnsmasq-config
+              mountPath: /etc/dnsmasq.d
         - name: unbound
           image: mvance/unbound:latest
           ports:
             - containerPort: 5335
               name: unbound
       volumes:
+        - name: pihole-config
+          emptyDir: {}
+        - name: dnsmasq-config
+          emptyDir: {}
         - name: unbound-config
           configMap:
             name: unbound-config
