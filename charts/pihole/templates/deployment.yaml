@@ -38,9 +38,11 @@ spec:
               name: unbound
       volumes:
         - name: pihole-config
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: pihole-config-pvc
         - name: dnsmasq-config
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: dnsmasq-config-pvc
         - name: unbound-config
           configMap:
             name: unbound-config
