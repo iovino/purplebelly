@@ -14,7 +14,7 @@ spec:
     targetRevision: 0.6.4  # Match chart version, not image tag
     helm:
       valueFiles:
-        - charts/deployments/kube-vip/values.yaml
+        - values.yaml
   syncPolicy:
     automated:
       prune: true
