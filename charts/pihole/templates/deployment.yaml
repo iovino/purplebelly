@@ -31,9 +31,6 @@ spec:
           ports:
             - containerPort: 5335
               name: unbound
-          volumeMounts:
-            - name: unbound-config
-              mountPath: /opt/unbound
       volumes:
         - name: unbound-config
           configMap:
