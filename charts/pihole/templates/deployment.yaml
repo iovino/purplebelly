@@ -26,3 +26,15 @@ spec:
               value: {{ .Values.timezone | quote }}
             - name: WEBPASSWORD
               value: {{ .Values.adminPassword | quote }}
+        - name: unbound
+          image: mvance/unbound:latest
+          ports:
+            - containerPort: 5335
+              name: unbound
+          volumeMounts:
+            - name: unbound-config
+              mountPath: /opt/unbound
+      volumes:
+        - name: unbound-config
+          configMap:
+            name: unbound-config
