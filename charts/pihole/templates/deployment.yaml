@@ -36,6 +36,12 @@ spec:
               mountPath: /etc/pihole
             - name: dnsmasq-config
               mountPath: /etc/dnsmasq.d
+            - name: pihole-log
+              mountPath: /var/log/pihole
+            - name: lighttpd-log
+              mountPath: /var/log/lighttpd
+            - name: run-dir
+              mountPath: /run
         - name: unbound
           image: mvance/unbound:latest
           ports:
@@ -51,3 +57,9 @@ spec:
         - name: unbound-config
           configMap:
             name: unbound-config
+        - name: pihole-log
+          emptyDir: {}
+        - name: lighttpd-log
+          emptyDir: {}
+        - name: run-dir
+          emptyDir: {}
