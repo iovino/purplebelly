@@ -7,6 +7,9 @@ image:
 config:
   address: "192.168.1.100"
 
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
+
 env:
   vip_interface: "eth0"
   vip_arp: "true"
