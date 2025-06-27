@@ -13,7 +13,8 @@ spec:
         app: pihole
     spec:
       securityContext:
-        fsGroup: 0
+        fsGroup: 999
+        fsGroupChangePolicy: "OnRootMismatch"
       containers:
         - name: pihole
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
