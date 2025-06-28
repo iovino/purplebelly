@@ -13,7 +13,7 @@ spec:
       targetPort: dns
   selector:
     app: pi-hole
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
@@ -30,7 +30,7 @@ spec:
       targetPort: dns-tcp
   selector:
     app: pi-hole
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: v1
 kind: Service
