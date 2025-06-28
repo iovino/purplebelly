@@ -63,6 +63,12 @@ spec:
       53: "pi-hole/pi-hole-udp:53"
 EOF
 
+# create mounts
+mkdir -p /mnt/disks/vol1
+sudo mount -t tmpfs vol1 /mnt/disks/vol1
+
+mkdir -p /mnt/disks/vol2
+sudo mount -t tmpfs vol2 /mnt/disks/vol2
 
 # Kubeconfig
 if [ ! -f "$HOME/.kube/config" ]; then

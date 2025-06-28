@@ -20,7 +20,7 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - node1
+                - purple-belly
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -44,7 +44,7 @@ spec:
             - key: kubernetes.io/hostname
               operator: In
               values:
-                - node1
+                - purple-belly
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
