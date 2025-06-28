@@ -40,8 +40,6 @@ spec:
         ports:
           http: 80
           https: 443
-          dns-udp: 53
-          dns-tcp: 53
       service:
         enabled: false
       publishService:
@@ -55,11 +53,7 @@ spec:
       extraArgs:
         tcp-services-configmap: "ingress-nginx/ingress-nginx-tcp"
         udp-services-configmap: "ingress-nginx/ingress-nginx-udp"
-        - --report-node-internal-ip-address
-    tcp:
-      53: "pi-hole/dns-tcp:53"
-    udp:
-      53: "pi-hole/dns-udp:53"
+        report-node-internal-ip-address: "true"
 EOF
 
 # create mounts
@@ -104,6 +98,9 @@ if ! kubectl get ns argocd >/dev/null 2>&1; then
   echo "Installing ArgoCD..."
   kubectl create namespace argocd
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+  echo "Patching argocd-server to add --insecure flag..."
+  kubectl -n argocd patch deployment argocd-server --type='json' -p='[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value": "--insecure"}]'
 
   echo "Waiting for ArgoCD to be ready..."
   kubectl -n argocd rollout status deploy/argocd-server
