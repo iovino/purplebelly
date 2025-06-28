@@ -15,12 +15,10 @@ else
   echo "k3s is already installed, skipping..."
 fi
 
+# Setup nginx ingress controller
+kubectl create namespace ingress-nginx
+kubectl create ingressclass ingress-nginx --controller=k8s.io/ingress-nginx
 cat >/var/lib/rancher/k3s/server/manifests/ingress-nginx.yaml <<EOF
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: ingress-nginx
----
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
 metadata:
@@ -57,10 +55,11 @@ spec:
       extraArgs:
         tcp-services-configmap: "ingress-nginx/ingress-nginx-tcp"
         udp-services-configmap: "ingress-nginx/ingress-nginx-udp"
+        - --report-node-internal-ip-address
     tcp:
-      53: "pi-hole/pi-hole-tcp:53"
+      53: "pi-hole/dns-tcp:53"
     udp:
-      53: "pi-hole/pi-hole-udp:53"
+      53: "pi-hole/dns-udp:53"
 EOF
 
 # create mounts
@@ -99,31 +98,6 @@ fi
 # Cluster Verification
 echo "Verifying cluster..."
 kubectl get nodes
-
-
-#TRAEFIK_CONFIG_PATH="/var/lib/rancher/k3s/server/manifests/traefik-config.yaml"
-#if [ ! -f "$TRAEFIK_CONFIG_PATH" ]; then
-#  echo "Configuring Traefik to expose UDP port 53 for DNS..."
-#  sudo tee "$TRAEFIK_CONFIG_PATH" > /dev/null <<'EOF'
-#apiVersion: helm.cattle.io/v1
-#kind: HelmChartConfig
-#metadata:
-#  name: traefik
-#  namespace: kube-system
-#spec:
-#  valuesContent: |-
-#    logs:
-#      general:
-#        level: DEBUG
-#    ports:
-#      dns-udp:
-#        port: 53
-#        protocol: UDP
-#EOF
-#  echo "Traefik config created. It may take a minute for k3s to apply the changes."
-#else
-#    echo "Traefik DNS config already exists, skipping..."
-#fi
 
 # ArgoCD install
 if ! kubectl get ns argocd >/dev/null 2>&1; then
