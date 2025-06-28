@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: pihole
+  name: pi-hole
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: git@github.com:iovino/purplebelly.git
     targetRevision: HEAD
-    path: charts/pihole
+    path: charts/pi-hole
     helm:
       valueFiles:
         - values.yaml

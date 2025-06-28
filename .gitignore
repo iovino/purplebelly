@@ -8,3 +8,5 @@
 Thumbs.db
 
 /.tmp
+
+charts/pi-hole/templates/secret.yaml
