@@ -4,7 +4,7 @@ metadata:
   name: pihole-ingress
   namespace: pi-hole
 spec:
-  ingressClassName: traefik
+  ingressClassName: ingress-nginx
   rules:
     - host: pi-hole.purplebelly.local
       http:
