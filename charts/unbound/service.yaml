@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unbound
+  namespace: pi-hole
+spec:
+  selector:
+    app: unbound
+  ports:
+    - name: dns-udp
+      port: 5353
+      protocol: UDP
+    - name: dns-tcp
+      port: 5353
+      protocol: TCP

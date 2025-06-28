@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unbound-config
+  namespace: pi-hole
+data:
+  unbound.conf: |
+    server:
+      # The number of threads to create to answer queries.
+      num-threads: 2
+
+      # The port to answer queries on. 5353 is a common alternative to 53.
+      port: 5353
+
+      # The interfaces to answer queries from. 0.0.0.0 means all interfaces.
+      interface: 0.0.0.0
+      access-control: 0.0.0.0/0 allow
+
+      # Run as a different user for security
+      username: "unbound"
+
+      # Increase verbosity
+      verbosity: 1
+
+      # Cache settings
+      msg-cache-size: 50m
+      rrset-cache-size: 100m
+
+      # DNSSEC validation
+      auto-trust-anchor-file: "/etc/unbound/root.key"
+
+      # Privacy and security settings
+      harden-dnssec-stripped: yes
+      use-caps-for-id: yes
+      harden-glue: yes
+      harden-algo-downgrade: yes
+      private-address: 192.168.0.0/16
+      private-address: 172.16.0.0/12
+      private-address: 10.0.0.0/8
+      hide-identity: yes
+      hide-version: yes
+      qname-minimisation: yes
+
+      # Forward local domains to your router/local DNS if needed
+      # private-domain: "your-local-domain.com"
+      # forward-zone:
+      #   name: "your-local-domain.com"
+      #   forward-addr: 192.168.1.1

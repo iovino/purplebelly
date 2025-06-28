@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unbound
+  namespace: pi-hole
+  labels:
+    app: unbound
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unbound
+  template:
+    metadata:
+      labels:
+        app: unbound
+    spec:
+      containers:
+        - name: unbound
+          image: mvance/unbound:latest
+          ports:
+            - containerPort: 5353
+              name: dns-udp
+              protocol: UDP
+            - containerPort: 5353
+              name: dns-tcp
+              protocol: TCP
+          volumeMounts:
+            - name: unbound-config-volume
+              mountPath: /etc/unbound/unbound.conf
+              subPath: unbound.conf
+      volumes:
+        - name: unbound-config-volume
+          configMap:
+            name: unbound-config
