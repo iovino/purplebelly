@@ -6,13 +6,43 @@ metadata:
 data:
   unbound.conf: |
     server:
-      # Use maximum verbosity for debugging
-      verbosity: 5
-      use-syslog: no
+      # Set to 1 for minimal logs; use 0 for silent mode
+      verbosity: 1
+      use-syslog: yes
 
-      # Basic server settings
+      # Network and access control
       port: 5353
       interface: 0.0.0.0
+      access-control: 192.168.0.0/16 allow
+      access-control: 10.0.0.0/8 allow
+      access-control: 127.0.0.0/8 allow
+      access-control: ::1 allow
 
-      # Allow all access for debugging purposes
-      access-control: 0.0.0.0/0 allow
+      # Disable root hints fallback
+      root-hints: "/etc/unbound/root.hints"
+
+      # Enable DNSSEC
+      auto-trust-anchor-file: "/var/lib/unbound/root.key"
+      harden-dnssec-stripped: yes
+      harden-glue: yes
+      harden-algo-downgrade: yes
+      harden-below-nxdomain: yes
+
+      # Cache and performance
+      msg-cache-size: 50m
+      rrset-cache-size: 100m
+      cache-max-ttl: 86400
+      cache-min-ttl: 3600
+
+      # Privacy
+      hide-identity: yes
+      hide-version: yes
+      qname-minimisation: yes
+      prefetch: yes
+
+      # Local private addresses (don't forward)
+      private-address: 192.168.0.0/16
+      private-address: 172.16.0.0/12
+      private-address: 10.0.0.0/8
+      private-address: fd00::/8
+      private-address: fe80::/10
