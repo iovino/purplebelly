@@ -1,4 +1,28 @@
 apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: llama-models-pv
+  namespace: llama
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: llama-models
+  local:
+    path: /mnt/disks/llama-models
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - purple-belly
+---
+apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: llama-models-pvc
@@ -6,7 +30,7 @@ metadata:
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: local-storage
+  storageClassName: llama-models
   resources:
     requests:
       storage: 10Gi
