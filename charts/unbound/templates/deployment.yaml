@@ -9,15 +9,18 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: unbound
+      app: pi-hole
+  strategy:
+    # Uses Recreate to ensure the old pod is gone before the new one starts
+    type: Recreate
   template:
     metadata:
       labels:
         app: unbound
     spec:
       containers:
-        - name: unbound
-          image: mvance/unbound:latest
+        - image: mvance/unbound:latest
+          name: unbound
           ports:
             - containerPort: 5353
               name: dns-udp
@@ -25,11 +28,23 @@ spec:
             - containerPort: 5353
               name: dns-tcp
               protocol: TCP
+          # Probes to check if unbound process is running and responsive
+          startupProbe:
+            exec:
+              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 24 # Gives the container 2 minutes to start up
+          livenessProbe:
+            exec:
+              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
           volumeMounts:
-            - name: unbound-config-volume
-              mountPath: /etc/unbound/unbound.conf
+            - mountPath: /etc/unbound/unbound.conf
+              name: etc-unbound
               subPath: unbound.conf
       volumes:
-        - name: unbound-config-volume
+        - name: etc-unbound
           configMap:
             name: unbound-config
