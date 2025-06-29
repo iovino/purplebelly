@@ -6,35 +6,13 @@ metadata:
 data:
   unbound.conf: |
     server:
-      # Ensure logs go to stdout for kubectl logs
+      # Use maximum verbosity for debugging
+      verbosity: 5
       use-syslog: no
 
-      # Increase verbosity for debugging. You can lower this later.
-      verbosity: 1
-      log-queries: yes
-
-      # Listen on port 5353 on all interfaces within the pod
+      # Basic server settings
       port: 5353
       interface: 0.0.0.0
 
-      # Allow access from the pod network and localhost for testing
-      # The default k3s pod network is 10.42.0.0/16. Adjust if yours is different.
-      access-control: 10.42.0.0/16 allow
-      access-control: 127.0.0.1/32 allow
-
-      # DNSSEC validation
-      auto-trust-anchor-file: "/etc/unbound/root.key"
-
-      # Security and privacy settings
-      harden-dnssec-stripped: yes
-      use-caps-for-id: yes
-      harden-glue: yes
-      harden-algo-downgrade: yes
-      hide-identity: yes
-      hide-version: yes
-      qname-minimisation: yes
-
-      # Block private address ranges from being returned to clients
-      private-address: 192.168.0.0/16
-      private-address: 172.16.0.0/12
-      private-address: 10.0.0.0/8
+      # Allow all access for debugging purposes
+      access-control: 0.0.0.0/0 allow
