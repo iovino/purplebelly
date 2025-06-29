@@ -9,17 +9,15 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pi-hole
-  strategy:
-    type: Recreate
+      app: unbound
   template:
     metadata:
       labels:
         app: unbound
     spec:
       containers:
-        - image: mvance/unbound:latest
-          name: unbound
+        - name: unbound
+          image: mvance/unbound:latest
           ports:
             - containerPort: 5353
               name: dns-udp
@@ -27,22 +25,11 @@ spec:
             - containerPort: 5353
               name: dns-tcp
               protocol: TCP
-          startupProbe:
-            exec:
-              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            failureThreshold: 24 # Gives the container 2 minutes to start up
-          livenessProbe:
-            exec:
-              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
-            initialDelaySeconds: 15
-            periodSeconds: 10
           volumeMounts:
-            - mountPath: /etc/unbound/unbound.conf
-              name: etc-unbound
+            - name: unbound-config-volume
+              mountPath: /etc/unbound/unbound.conf
               subPath: unbound.conf
       volumes:
-        - name: etc-unbound
+        - name: unbound-config-volume
           configMap:
             name: unbound-config
