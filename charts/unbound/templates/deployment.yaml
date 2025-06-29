@@ -20,6 +20,8 @@ spec:
       containers:
         - name: unbound
           image: mvance/unbound:latest
+          command: ["unbound"]
+          args: ["-d", "-v", "-c", "/etc/unbound/unbound.conf"]
           ports:
             - containerPort: 5353
               name: dns-udp
@@ -27,21 +29,6 @@ spec:
             - containerPort: 5353
               name: dns-tcp
               protocol: TCP
-          startupProbe:
-            exec:
-              command:
-                - /usr/sbin/unbound-control
-                - status
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            failureThreshold: 24
-          livenessProbe:
-            exec:
-              command:
-                - /usr/sbin/unbound-control
-                - status
-            initialDelaySeconds: 15
-            periodSeconds: 10
           volumeMounts:
             - name: unbound-config-volume
               mountPath: /etc/unbound/unbound.conf
