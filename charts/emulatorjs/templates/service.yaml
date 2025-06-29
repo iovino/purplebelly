@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: emulatorjs
+  namespace: emulatorjs
+spec:
+  selector:
+    app: emulatorjs
+  ports:
+    - name: emulatorjs
+      port: 80
+      targetPort: emulatorjs
+    - name: management
+      port: 3000
+      targetPort: management

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: emulatorjs
+description: A web-based game emulator that runs ROMs for NES/SNES/GameBoy, etc. via the browser.
+type: application
+version: 0.1.0
+appVersion: "2025.06.29"
