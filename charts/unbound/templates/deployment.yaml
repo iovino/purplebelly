@@ -29,13 +29,17 @@ spec:
               protocol: TCP
           startupProbe:
             exec:
-              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
+              command:
+                - /usr/sbin/unbound-control
+                - status
             initialDelaySeconds: 5
             periodSeconds: 5
             failureThreshold: 24
           livenessProbe:
             exec:
-              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
+              command:
+                - /usr/sbin/unbound-control
+                - status
             initialDelaySeconds: 15
             periodSeconds: 10
           volumeMounts:
