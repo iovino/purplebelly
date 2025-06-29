@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llama-server
+  namespace: llama
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: llama-server
+  template:
+    metadata:
+      labels:
+        app: llama-server
+    spec:
+      containers:
+        - name: llama
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/app/server"]
+          args: ["-m", "{{ .Values.model.path }}"]
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: /models
+              name: model-volume
+          resources:
+            limits:
+              nvidia.com/gpu: "1"
+            requests:
+              cpu: "1"
+              memory: "2Gi"
+      volumes:
+        - name: model-volume
+          persistentVolumeClaim:
+            claimName: llama-models-pvc
