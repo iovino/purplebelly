@@ -10,6 +10,8 @@ spec:
   selector:
     matchLabels:
       app: unbound
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -25,6 +27,17 @@ spec:
             - containerPort: 5353
               name: dns-tcp
               protocol: TCP
+          startupProbe:
+            exec:
+              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 24
+          livenessProbe:
+            exec:
+              command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
+            initialDelaySeconds: 15
+            periodSeconds: 10
           volumeMounts:
             - name: unbound-config-volume
               mountPath: /etc/unbound/unbound.conf
