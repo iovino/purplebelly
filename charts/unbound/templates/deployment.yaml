@@ -11,7 +11,6 @@ spec:
     matchLabels:
       app: pi-hole
   strategy:
-    # Uses Recreate to ensure the old pod is gone before the new one starts
     type: Recreate
   template:
     metadata:
@@ -28,7 +27,6 @@ spec:
             - containerPort: 5353
               name: dns-tcp
               protocol: TCP
-          # Probes to check if unbound process is running and responsive
           startupProbe:
             exec:
               command: ["dig", "@127.0.0.1", "-p", "5353", "google.com"]
