@@ -17,7 +17,6 @@ spec:
         - name: llama
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command: ["/app/server"]
           args: ["-m", "{{ .Values.model.path }}"]
           ports:
             - containerPort: 8080
