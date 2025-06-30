@@ -25,8 +25,6 @@ spec:
             - mountPath: /models
               name: model-volume
           resources:
-            limits:
-              nvidia.com/gpu: "1"
             requests:
               cpu: "1"
               memory: "2Gi"
