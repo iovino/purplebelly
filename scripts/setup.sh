@@ -5,7 +5,7 @@ echo "Updating system..."
 sudo apt update && sudo apt upgrade -y
 
 echo "Installing dependencies..."
-sudo apt install -y curl wget git gnupg lsb-release
+sudo apt install -y curl wget git gnupg lsb-release nvidia-driver-535 nvidia-utils-535
 
 # K3s
 if ! command -v k3s >/dev/null 2>&1; then
@@ -51,17 +51,8 @@ spec:
       config:
         use-forwarded-headers: "true"
       extraArgs:
-        tcp-services-configmap: "ingress-nginx/ingress-nginx-tcp"
-        udp-services-configmap: "ingress-nginx/ingress-nginx-udp"
         report-node-internal-ip-address: "true"
 EOF
-
-# create mounts
-mkdir -p /mnt/disks/vol1
-sudo mount -t tmpfs vol1 /mnt/disks/vol1
-
-mkdir -p /mnt/disks/vol2
-sudo mount -t tmpfs vol2 /mnt/disks/vol2
 
 # Kubeconfig
 if [ ! -f "$HOME/.kube/config" ]; then
