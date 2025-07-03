@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+        - name: mc
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args: ["--noconsole"]
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: EULA
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "minecraft.fullname" . }}-eula
+                  key: eula.txt
+          volumeMounts:
+            - name: data
+              mountPath: /data
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Values.appName }}-data
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.appName }}-config
+  namespace: {{ .Values.namespace }}
+data:
+  server.properties: |
+    motd=Welcome to purplebelly!
+    max-players=20
+    online-mode=true
+    level-name=world
