@@ -24,7 +24,7 @@ spec:
             - name: EULA
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "minecraft.fullname" . }}-eula
+                  name: {{ .Values.appName }}-eula
                   key: eula.txt
           volumeMounts:
             - name: data
