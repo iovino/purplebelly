@@ -22,10 +22,11 @@ spec:
             - containerPort: {{ .Values.service.port }}
           env:
             - name: EULA
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.appName }}-eula
-                  key: eula.txt
+              value: "{{ .Values.env.EULA }}"
+            - name: TYPE
+              value: "{{ .Values.env.TYPE }}"
+            - name: VERSION
+              value: "{{ .Values.env.VERSION }}"
           volumeMounts:
             - name: data
               mountPath: /data
