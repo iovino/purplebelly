@@ -26,7 +26,7 @@ spec:
             - name: TYPE
               value: "PAPER"      # runs PaperMC; other options: VANILLA, SPIGOT, FORGE, etc.
             - name: VERSION
-              value: "1.20.2"     # or “LATEST” to always pull the newest release
+              value: "1.21.7"     # or “LATEST” to always pull the newest release
           volumeMounts:
             - name: data
               mountPath: /data
