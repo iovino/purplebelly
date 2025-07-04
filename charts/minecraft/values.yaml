@@ -41,16 +41,14 @@ env:
   - name: EULA
     value: "true"
   - name: TYPE
-    value: "FABRIC"
+    value: "FORGE"
   - name: VERSION
     value: "1.21.7"
-  - name: FABRIC_LOADER_VERSION
-    value: "0.15.11" # Optional override if needed
   - name: REMOVE_OLD_MODS
     value: "TRUE"
   - name: MODS
     value: |
-      https://edge.forgecdn.net/files/6713/285/journeymap-fabric-1.21.7-6.0.0-beta.52.jar
+      https://edge.forgecdn.net/files/6713/283/journeymap-forge-1.21.7-6.0.0-beta.52.jar
 
 # runs PaperMC; other options: VANILLA, SPIGOT, FORGE, etc.
 #env:
