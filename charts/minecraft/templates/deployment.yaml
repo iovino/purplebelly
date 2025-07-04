@@ -21,12 +21,7 @@ spec:
           ports:
             - containerPort: {{ .Values.service.port }}
           env:
-            - name: EULA
-              value: "true"       # must accept Mojang’s EULA
-            - name: TYPE
-              value: "PAPER"      # runs PaperMC; other options: VANILLA, SPIGOT, FORGE, etc.
-            - name: VERSION
-              value: "1.21.7"     # or “LATEST” to always pull the newest release
+{{ toYaml .Values.env | indent 12 }}
           volumeMounts:
             - name: data
               mountPath: /data
