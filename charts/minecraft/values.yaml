@@ -40,6 +40,8 @@ eula: "true"
 env:
   - name: EULA
     value: "true"
+  - name: ONLINE_MODE
+    value: "false"
   - name: TYPE
     value: "FORGE"
   - name: VERSION
