@@ -1,6 +1,6 @@
 replicaCount: 1
 namespace: minecraft
-appName: minecraft
+appName: minecraft-server
 
 image:
   repository: itzg/minecraft-server
@@ -24,17 +24,9 @@ ingress:
 
 persistence:
   enabled: true
-  size: 10Gi
+  size: 50Gi
 
 resources: {}
-# e.g.
-# limits:
-#   cpu: 1000m
-#   memory: 2Gi
-# requests:
-#   cpu: 500m
-#   memory: 1Gi
-
 eula: "true"
 
 env:
@@ -53,10 +45,3 @@ env:
       https://edge.forgecdn.net/files/6713/283/journeymap-forge-1.21.7-6.0.0-beta.52.jar
 
 # runs PaperMC; other options: VANILLA, SPIGOT, FORGE, etc.
-#env:
-#  - name: EULA
-#    value: "true"
-#  - name: TYPE
-#    value: "PAPER"
-#  - name: VERSION
-#    value: "1.21.7"

@@ -23,12 +23,12 @@ spec:
           env:
 {{ toYaml .Values.env | indent 12 }}
           volumeMounts:
-            - name: data
+            - name:  {{ .Values.appName }}-data
               mountPath: /data
           resources:
 {{ toYaml .Values.resources | indent 12 }}
       volumes:
-        - name: data
+        - name:  {{ .Values.appName }}-data
           persistentVolumeClaim:
             claimName: {{ .Values.appName }}-data
       securityContext:
