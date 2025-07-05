@@ -39,7 +39,7 @@ env:
   - name: VERSION
     value: "1.21.7"
   - name: REMOVE_OLD_MODS
-    value: "TRUE"
+    value: "FALSE"
   - name: MODS
     value: |
       https://edge.forgecdn.net/files/6713/283/journeymap-forge-1.21.7-6.0.0-beta.52.jar
