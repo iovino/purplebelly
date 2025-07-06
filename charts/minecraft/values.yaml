@@ -35,13 +35,13 @@ env:
   - name: ONLINE_MODE
     value: "false"
   - name: TYPE
-    value: "FORGE"
+    value: "NEOFORGE"
   - name: VERSION
     value: "1.21.7"
   - name: REMOVE_OLD_MODS
     value: "FALSE"
   - name: MODS
     value: |
-      https://edge.forgecdn.net/files/6713/283/journeymap-forge-1.21.7-6.0.0-beta.52.jar
+      https://mediafilez.forgecdn.net/files/6733/601/corpse-neoforge-1.21.7-1.1.11.jar
 
 # runs PaperMC; other options: VANILLA, SPIGOT, FORGE, etc.
