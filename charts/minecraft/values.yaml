@@ -36,6 +36,8 @@ env:
     value: "false"
   - name: TYPE
     value: "NEOFORGE"
+  - name: NEOFORGE_VERSION
+    value: "21.7.8-beta"
   - name: VERSION
     value: "1.21.7"
   - name: REMOVE_OLD_MODS
