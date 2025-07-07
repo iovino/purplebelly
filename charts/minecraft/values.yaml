@@ -11,6 +11,9 @@ service:
   type: NodePort
   port: 25565
   nodePort: 30023
+  voice:
+    port: 24454
+    nodePort: 30054
 
 ingress:
   enabled: true

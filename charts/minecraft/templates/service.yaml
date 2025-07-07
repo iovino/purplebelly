@@ -11,5 +11,10 @@ spec:
       targetPort: {{ .Values.service.port }}
       nodePort: {{ .Values.service.nodePort }}
       protocol: TCP
+    - name: {{ .Values.appName }}-voice
+      port: {{ .Values.service.voice.port }}
+      targetPort: {{ .Values.service.voice.port }}
+      nodePort: {{ .Values.service.voice.nodePort }}
+      protocol: UDP
   selector:
     app: {{ .Values.appName }}
