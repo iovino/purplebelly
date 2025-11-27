@@ -1,0 +1,23 @@
+appName: noremains
+namespace: noremains
+
+replicaCount: 1
+
+image:
+  repository: php
+  tag: 8.2-apache
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: noremains.local
+      paths:
+        - /
+  tls: []

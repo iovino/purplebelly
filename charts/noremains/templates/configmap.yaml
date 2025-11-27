@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.appName }}-code
+  namespace: {{ .Values.namespace }}
+data:
+  index.php: |
+    <?php
+    echo "<h1>Hello World!</h1>";
+    echo "<p>Served from Kubernetes via Helm.</p>";
+    ?>
