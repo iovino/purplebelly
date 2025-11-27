@@ -25,5 +25,6 @@ spec:
               mountPath: /var/www/html
       volumes:
         - name: code-volume
-          configMap:
-            name: {{ .Values.appName }}-code
+          hostPath:
+            path: {{ .Values.persistence.hostPath }}
+            type: DirectoryOrCreate

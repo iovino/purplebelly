@@ -6,6 +6,15 @@ metadata:
 data:
   index.php: |
     <?php
-    echo "<h1>Hello World!</h1>";
-    echo "<p>Served from Kubernetes via Helm.</p>";
+      header('Content-Type: application/json');
+      header('Access-Control-Allow-Origin: *');
+      $host = $_SERVER['HTTP_HOST'];
+      $response = [
+          "latest_version" => "1.0.3",
+          "download_url" => "http://" . $host . "/update_package.zip",
+          "broadcast" => "<h3>&nbsp;Latest Transmissions:</h3><ul><li>> [NOV 25]: Happy Birthday, Sammy!</li><li>> [NOV 26]: Happy Birthday, Adddie!</li></ul>"
+      ];
+
+      echo json_encode($response, JSON_UNESCAPED_SLASHES);
+      exit;
     ?>

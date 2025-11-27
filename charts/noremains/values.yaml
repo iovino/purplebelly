@@ -3,6 +3,9 @@ namespace: noremains
 
 replicaCount: 1
 
+persistence:
+  hostPath: /mnt/noremains
+
 image:
   repository: php
   tag: 8.2-apache
