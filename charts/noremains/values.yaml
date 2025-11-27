@@ -4,7 +4,7 @@ namespace: noremains
 replicaCount: 1
 
 persistence:
-  hostPath: /mnt/noremains
+  hostPath: /home/ken/shared/noremains
 
 image:
   repository: php
